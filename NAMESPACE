@@ -1,0 +1,4 @@
+import("graphics","plotrix", "shape")
+importFrom("grDevices", "axisTicks")
+
+export("stripes", "prepplot")
