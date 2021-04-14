@@ -1,0 +1,8 @@
+Change log for prepplot
+
+Version 1.0, April 2021
+- changed defaults for two colours in prepplot: bg from "grey92" to par("bg") and col.stripes from "grey98" to "grey90" (like in stripes)
+- modified vignette to adjust for the above changes and improve a few wordings
+
+Version 0.7, April 2018
+First version on CRAN

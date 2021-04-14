@@ -1,7 +1,7 @@
 ---
 title: "Configuring Figure Regions with prepplot"
 author: "Ulrike Grömping"
-date: "03 April 2018"
+date: "13 April 2021"
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Overview and Examples}
@@ -39,6 +39,8 @@ prepplot(swiss$Education, swiss$Fertility,
 points(Fertility ~ Education, swiss, pch=16, col="grey20", cex=1.3)
 ## prepplot ggplot like 
 prepplot(swiss$Education, swiss$Fertility, 
+         ## background color (like in version 0.7 of prepplot)
+         bg = "grey92",
          ## manage grid
          gridx=TRUE, gridy=TRUE, col.grid="white", lty.grid="solid", 
          ## manage axis annotation
@@ -71,32 +73,41 @@ The only compulsory arguments `xlim` and `ylim` specify the data limits for the 
 ## Scope
 `prepplot` requires numeric `xlim` and `ylim` specifications; it currently does not work with logarithmic axes. For a date, time or date-time axis, the user has to take care of conversion to numeric values before using `prepplot` (see the last example in the examples section). Axes with character-valued ticks are always based on numeric tick position specifications; see e.g. Figure&nbsp;\@ref(fig:barplots) for a barplot example.
 
-## Default figure regions
-The code below creates a default figure region with the default choice for `xaxs` and `yaxs` (assuming that the default has not been changed in `par`) and both choices modified to exact axis limits. The result is shown in Figure&nbsp;\@ref(fig:default); the bottom margin has been reduced, because it would produce a lot of empty space between the figure and its caption.
+## Default plot regions
+The code below creates a default plot region with the default choice for `xaxs` and `yaxs` (assuming that the default has not been changed in `par`) and both choices modified to exact axis limits. The result is shown in Figure&nbsp;\@ref(fig:default); the bottom margin has been reduced, because it would produce a lot of empty space between the figure and its caption.
 
-```{r default, fig.height=3, fig.cap="`prepplot` default plot regions"}
+```{r default, fig.height=3, fig.cap="plot regions in `prepplot`, depending on `xaxs` and `yaxs`, where `xlim` and `ylim` correspond to the data ranges. The only structural element is the light grey background color."}
 x <- 0:10
 y <- -5:5
 par(mfrow=c(1,2), mar=c(2.1, 4.1, 4.1, 2.1))
-prepplot(x, y, main='default axis extension')
+prepplot(x, y, main='default axis extension', bg="grey92", cex.axis=0.8, mgpx=c(2,0.25,0))
 points(x,y, pch=16)
-prepplot(x, y, xaxs="i", yaxs="i", main='limits match axis extent')
+mtext('xaxs="r"', line=0.25, family="mono")
+prepplot(x, y, xaxs="i", yaxs="i", main='limits match axis extent', bg="grey92", cex.axis=0.8, mgpx=c(2,0.25,0))
 points(x,y, pch=16, xpd=TRUE)
+mtext('xaxs="i"', line=0.25, family="mono")
+
 ```
 
-For default figure regions,
+`prepplot` obeys to most general graphical parameters as set with function `par` (see `?par`), e.g. `mar`. Where further graphical parameters can be modified from within `prepplot` (`bg`, `xaxs`, `yaxs`, `xaxt`, `yaxt`, `cex`), they default to the current `par` settings; this is partly also true for parameters that are set for specific components, like `mgp`, `lwd` or `col`; `las` is an exception: it is per default 1 in `prepplot`, regardless of `par("las")`. `prepplot` does not actively change the graphics state (as queried by `par()`). 
 
-* the background color is light grey (`grey92`),
-* the background rectangle corresponds to the `usr` area calculated by R from the axis limits by extending them by 4% (arguments `xaxs` and `yaxs` equal to `"r"` or `NULL` (assuming unchanged `par` specifications))
+For default plot regions,
+
 * the axes are annotated using default tick positions, 
 * all axis annotations are parallel to the horizontal axis (`las=1`), i.e., easily readable from the reader's perspective (the y axis label, if specified, is parallel to the y axis),
 * axis annotation color is not black but a dark grey (`grey20`),
 * neither axis lines nor tick marks are drawn (`lwd.axis=0`),
 * the border color is the same as the background color (when changing `lwd.axis` to a positive value, the default border color becomes the annotation color specified with `col.axis`), 
 * no axis labels are printed (`xlab` and `ylab` are `NULL`),
-* and neither stripes nor grid lines for orientation are drawn (because it is hard to set suitable general defaults for them).
+* neither stripes nor grid lines for orientation are drawn (because it is hard to set suitable general defaults for them),
+* and the plot background color is identical to the figure background color.
 
-`prepplot` obeys to the general graphical parameters as set with function `par` (see `?par`), e.g. `mar`, except for the parameter `bg`, for which the `prepplot` default (`bg="grey92"`) can only be modified from within `prepplot`. Where further graphical parameters can be modified from within `prepplot` (`xaxs`, `yaxs`, `xaxt`, `yaxt`, `cex`), they default to the current `par` settings; this is partly also true for parameters that are set for specific components, like `mgp`, `lwd` or `col`. `prepplot` does not actively change the graphics state (as queried by `par()`). 
+Default plot regions are therefore very unobtrusive: they are neither highlighted by a background color nor bounded by a border line nor indicated by visible axis lines or tick marks. In most cases, one will want to activate one or more structural elements:
+
+* grid lines (`gridx`, `gridy`), possibly major and minor;
+* a color difference between plot region and figure region by changing `bg` (e.g. to "grey92", which used to be its default in version~0.7 of the package): `bg` in `prepplot` affects the plot region only, which is the `usr` area calculated by R from the axis limits by extending them by 4% (arguments `xaxs` and/or `yaxs` equal to `"r"` or `NULL`, assuming unchanged `par` specifications) or not at all (arguments `xaxs` and/or `yaxs` equal to `"i"`);
+* background stripes (`stripex`, `stripey`) as an alternative to grid lines;
+* added box and or axis lines with or without ticks: from within `prepplot` by setting positive `lwd.axis` (box and axis lines and ticks) or with subsequent `axis` and/or `box` statements.
 
 ## The axis extent (`xaxs` and `yaxs`) and the background area
 If `xaxs="r"`, the horizontal extent of the plot region is 4% larger than the range obtained from the `xlim` specification; if `xaxs="i"`, the x extent of the plot region exactly coincides with `range(xlim)`. If `xaxs=NULL`, `xaxs` is determined from the current graphics state `par("xaxs")`. `yaxs` behaves analogously for the vertical extent of the plot region. 
@@ -106,16 +117,16 @@ The background color colors the plot region, whose coordinates can also be queri
 Note that `xaxs="i"` or `yaxs="i"` should usually not be specified, if data values equal to one of the axis limits exist (see Figure&nbsp;\@ref(fig:default)). On the other hand, if the axis ranges have been chosen liberally, they may be a good choice, because the orientation marks often look more beautiful.
 
 ## Stripes and / or grid lines for orientation
-`prepplot` offers stripes and / or grid lines. Respective arguments are handled differently for x and y axes (e.g., `gridx`, `stripesx`).
-Stripes and grid lines cannot be simultaneously requested for the same axis within function `prepplot`; if both are desired, stripes should be done with `prepplot`, and subsequently grid lines can be added with function `abline`. The simplest use is to activate grid lines or stripes by, e.g., `gridx=TRUE` or `stripesy=TRUE`; in that case, axis tick positions define the locations of grid lines or stripes.
+`prepplot` offers stripes and / or grid lines. Respective arguments are handled separately for x and y axes (e.g., `gridx`, `stripesx`).
+Stripes and grid lines cannot be simultaneously requested for the same axis within function `prepplot`; if both are desired, stripes should be done with `prepplot`, and subsequently grid lines can be added with function `abline`. The simplest use is to activate grid lines or stripes by, e.g., `gridx=TRUE` or `stripesy=TRUE`; in that case, axis tick positions define the locations of grid lines or stripes. For stripes, swapping the colors between `bg` and `col.stripes` can make a big difference, as can be seen in Figure&nbsp;\@ref(fig:orient) by comparing the top and bottom chart in the middle column. 
 
 If grid lines are activated (`gridx` and/or `gridy` set to `TRUE`), these are dotted, whenever there are no minor grid lines and solid otherwise. Their default color is darker than the default background color but lighter than the default axis and annotation (`grey75`). Per default, if activated, minor grid lines are half as wide as major grid lines, whose width is governed by `par("lwd")` per default. 
-If stripes are activated without specifying specific stripes boundaries (`stripesx` and/or `stripesy` set to `TRUE`), the background is interrupted by stripes in lighter color (`grey98`) between tick positions. Depending on the device, the contrast between the default background color `grey92` and the default stripe color `grey98` may be inadequate, so that choices must be adapted. 
+If stripes are activated without specifying specific stripes boundaries (`stripesx` and/or `stripesy` set to `TRUE`), the background is interrupted by stripes (default color light grey, `grey90`) between tick positions. Depending on the device's default background color, this default may or may not be adequate. 
 
 Apart from using stripes or grid lines for orientation w.r.t. the axis scale, they can also be used for displaying information independent of the tick positions, e.g. grid lines for time points of interest or upper limits of harmful substances, or stripes for indicating time periods of interest in time series presentations (see, e.g., the last example). Such stripes or grid lines can be requested with function `prepplot`, or subsequently with functions `abline` or `stripes`.
 
 ## Axis labeling
-Per default, `prepplot` displays tick position labelings without ticks, and - if axis labels are given - axis labels. Axis annotation color is controlled by `col.axis`, which defaults to `grey20`, i.e. a dark grey. Tick position labels default to tick positions, but can be modified by `xticklabs`/`yticklabs`, e.g. for character or date values.
+Per default, `prepplot` displays tick position labelings without ticks, and~\textendash~if axis labels are given~\textendash~axis labels. Axis annotation color is controlled by `col.axis`, which defaults to `grey20`, i.e. a dark grey. Tick position labels default to tick positions, but can be modified by `xticklabs`/`yticklabs`, e.g. for character or date values.
 
 If default tick positions from R's calculations are not appropriate, `xticks` can be used for specifying custom tick positions for the horizontal axis. If `xticks` is not given (i.e. remains `NULL`), a vector-valued `gridx` or (if that is not available either) `stripesx` determines the x tick positions; default R tick positions are only calculated if neither of these is given. By giving both `xticks` and one of `gridx` or `stripesx`, stripes or lines corresponding to the horizontal axis can be specified independent of tick mark positions, as mentioned before. `yticks` and friends are completely analogous. 
 
@@ -158,7 +169,7 @@ It will often be of interest to adapt some `par` settings before calling functio
 
 ```{r parandmore, fig.cap='Some examples with `xaxs="i" and yaxs="i"`'}
 par(mfrow=c(2,2), mar=c(3.1, 4.1, 3.1, 2.1), mgp=c(2,0.5,0), xaxs="i", yaxs="i")
-prepplot(xlim=c(0,9), ylim=c(0,12), col.grid="grey98", 
+prepplot(xlim=c(0,9), ylim=c(0,12), bg="grey92", col.grid="grey98", 
          lty.grid=1, lwd.grid=1.5, gridx=0:9, gridy=seq(0,12,2), 
          xlab="x", ylab="y", cex = 0.7, mgpx=c(1.5,0.25,0), 
          mgpy=c(1.75,0.5,0), main="ggplot style")
@@ -207,7 +218,7 @@ barplot(tab,
 ```
 
 ## Various choices for orientation help
-The following code creates scatter plots on various backgrounds, illustrating various orientation strategies, which are on offer for function `prepplot`. The result is shown in Figure&nbsp;\@ref(fig:orient).
+The following code creates scatter plots on various backgrounds, illustrating various orientation strategies, which are on offer for function `prepplot`. The result is shown in Figure&nbsp;\@ref(fig:orient). Note: The charts use the default axis extent (ranges of `Education` and `Fertility`, extended by 4\%); a custom axis with well-chosen limits and suppressing extension by 4\% could yield constant widths for all stripes, also the outer ones. Also remember the previous remark on the effect of swapping `bg` and `col.stripes`.
 
 ```{r orient, fig.cap="Scatter plots with different orientation mark strategies", fig.height=6, fig.width=8}
 par(mfrow=c(2,3), oma=c(2,0,0,0), mgp=c(2.25,0.5,0), 
@@ -238,7 +249,7 @@ points(swiss$Education, swiss$Fertility, pch=16, col="grey20")
 
 ## stripes only
 prepplot(xlim=range(swiss$Education), ylim=range(swiss$Fertility), 
-         mgpy=c(2.5,0.5,0),
+         mgpy=c(2.5,0.5,0), bg="grey90", col.stripes = "white",
          xlab="Education", ylab="Fertility", 
          stripesx=seq(-5,60,5), stripesy=seq(30,100,5), cex=0.8, 
          xticks=seq(0,50,10), yticks = seq(40,90,10), 
@@ -250,7 +261,7 @@ prepplot(xlim=range(swiss$Education), ylim=range(swiss$Fertility),
          xlab="Education", ylab="Fertility", 
          stripesx=seq(-5,60,5), cex=0.8, 
          xticks=seq(0,50,10), yticks = seq(40,90,10),
-         main="only vertical stripes")
+         main="only vertical stripes", bg="grey90", col.stripes = "white")
 points(swiss$Education, swiss$Fertility, pch=16, col="grey20")
 
 prepplot(xlim=range(swiss$Education), ylim=range(swiss$Fertility), 

@@ -1,4 +1,4 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 require(prepplot)
 require(ggplot2)
@@ -17,6 +17,8 @@ prepplot(swiss$Education, swiss$Fertility,
 points(Fertility ~ Education, swiss, pch=16, col="grey20", cex=1.3)
 ## prepplot ggplot like 
 prepplot(swiss$Education, swiss$Fertility, 
+         ## background color (like in version 0.7 of prepplot)
+         bg = "grey92",
          ## manage grid
          gridx=TRUE, gridy=TRUE, col.grid="white", lty.grid="solid", 
          ## manage axis annotation
@@ -38,23 +40,26 @@ p <- ggplot(swiss, aes(Education, Fertility)) +
   geom_point() + labs(title="ggplot default")
 print(p, vp = vp1)
 
-## ----default, fig.height=3, fig.cap="`prepplot` default plot regions"----
+## ----default, fig.height=3, fig.cap="plot regions in `prepplot`, depending on `xaxs` and `yaxs`, where `xlim` and `ylim` correspond to the data ranges. The only structural element is the light grey background color."----
 x <- 0:10
 y <- -5:5
 par(mfrow=c(1,2), mar=c(2.1, 4.1, 4.1, 2.1))
-prepplot(x, y, main='default axis extension')
+prepplot(x, y, main='default axis extension', bg="grey92", cex.axis=0.8, mgpx=c(2,0.25,0))
 points(x,y, pch=16)
-prepplot(x, y, xaxs="i", yaxs="i", main='limits match axis extent')
+mtext('xaxs="r"', line=0.25, family="mono")
+prepplot(x, y, xaxs="i", yaxs="i", main='limits match axis extent', bg="grey92", cex.axis=0.8, mgpx=c(2,0.25,0))
 points(x,y, pch=16, xpd=TRUE)
+mtext('xaxs="i"', line=0.25, family="mono")
 
-## ----majorminor, fig.cap="Major and minor grid lines on white background"----
+
+## ----majorminor, fig.cap="Major and minor grid lines on white background"-----
 par(mar=par("mar")-1, mgp=c(2,0.3,0))
 prepplot(c(0,10), c(25,30), yticks=25:30, bg="white",
          lwd.grid.minor=1, gridyminor=4, gridx=TRUE,
          xlab="x axis label", ylab="y axis label", 
          main="Major/minor grid on white background")
 
-## ----reuse, ref.label="ggplot", echo=TRUE, eval=FALSE--------------------
+## ----reuse, ref.label="ggplot", echo=TRUE, eval=FALSE-------------------------
 #  par(mfrow=c(1, 3), mgp=c(2,0.2,0), mar=c(3.1,4.1,4.1,1.6))
 #  ## prepplot grid default
 #  prepplot(swiss$Education, swiss$Fertility,
@@ -66,6 +71,8 @@ prepplot(c(0,10), c(25,30), yticks=25:30, bg="white",
 #  points(Fertility ~ Education, swiss, pch=16, col="grey20", cex=1.3)
 #  ## prepplot ggplot like
 #  prepplot(swiss$Education, swiss$Fertility,
+#           ## background color (like in version 0.7 of prepplot)
+#           bg = "grey92",
 #           ## manage grid
 #           gridx=TRUE, gridy=TRUE, col.grid="white", lty.grid="solid",
 #           ## manage axis annotation
@@ -87,9 +94,9 @@ prepplot(c(0,10), c(25,30), yticks=25:30, bg="white",
 #    geom_point() + labs(title="ggplot default")
 #  print(p, vp = vp1)
 
-## ----parandmore, fig.cap='Some examples with `xaxs="i" and yaxs="i"`'----
+## ----parandmore, fig.cap='Some examples with `xaxs="i" and yaxs="i"`'---------
 par(mfrow=c(2,2), mar=c(3.1, 4.1, 3.1, 2.1), mgp=c(2,0.5,0), xaxs="i", yaxs="i")
-prepplot(xlim=c(0,9), ylim=c(0,12), col.grid="grey98", 
+prepplot(xlim=c(0,9), ylim=c(0,12), bg="grey92", col.grid="grey98", 
          lty.grid=1, lwd.grid=1.5, gridx=0:9, gridy=seq(0,12,2), 
          xlab="x", ylab="y", cex = 0.7, mgpx=c(1.5,0.25,0), 
          mgpy=c(1.75,0.5,0), main="ggplot style")
@@ -161,7 +168,7 @@ points(swiss$Education, swiss$Fertility, pch=16, col="grey20")
 
 ## stripes only
 prepplot(xlim=range(swiss$Education), ylim=range(swiss$Fertility), 
-         mgpy=c(2.5,0.5,0),
+         mgpy=c(2.5,0.5,0), bg="grey90", col.stripes = "white",
          xlab="Education", ylab="Fertility", 
          stripesx=seq(-5,60,5), stripesy=seq(30,100,5), cex=0.8, 
          xticks=seq(0,50,10), yticks = seq(40,90,10), 
@@ -173,7 +180,7 @@ prepplot(xlim=range(swiss$Education), ylim=range(swiss$Fertility),
          xlab="Education", ylab="Fertility", 
          stripesx=seq(-5,60,5), cex=0.8, 
          xticks=seq(0,50,10), yticks = seq(40,90,10),
-         main="only vertical stripes")
+         main="only vertical stripes", bg="grey90", col.stripes = "white")
 points(swiss$Education, swiss$Fertility, pch=16, col="grey20")
 
 prepplot(xlim=range(swiss$Education), ylim=range(swiss$Fertility), 
