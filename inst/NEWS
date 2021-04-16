@@ -1,5 +1,8 @@
 Change log for prepplot
 
+Version 1.0-1, April 2021
+- added rmarkdown to Suggests, because of change in knitr
+
 Version 1.0, April 2021
 - changed defaults for two colours in prepplot: bg from "grey92" to par("bg") and col.stripes from "grey98" to "grey90" (like in stripes)
 - modified vignette to adjust for the above changes and improve a few wordings
