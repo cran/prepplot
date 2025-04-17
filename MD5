@@ -1,11 +1,11 @@
-cb4deeb32a96bcdaabd21babbabf7355 *DESCRIPTION
+f4146f5fa64d148f1ee1aeccf2acacc5 *DESCRIPTION
 4d79b41b06f93bf2642183149ef1ff7a *NAMESPACE
 46015e4f4c6823f55175ea8d3ec41730 *R/prepplot.R
 245ea41be00e76cbd549691bf1e704c9 *R/stripes.R
 a51a2f9b1a579083cf9d1667c6b9071c *build/vignette.rds
-a6bf1a74743ca531c2c58125f2ce624c *inst/NEWS
+24c378ad8d231153ed9ba5657f8e0bb8 *inst/NEWS
 033e1e8ec6ae8ae0645a368fbb403983 *inst/doc/prepplotOverview.R
 e1cf23ff30eabc78527945cf03bd65c6 *inst/doc/prepplotOverview.Rmd
 e1af0406976bbce4502dc0e083ab7a04 *inst/doc/prepplotOverview.pdf
-43ce3b9b28db67df176d06ee4a0c96c4 *man/prepplot.Rd
+72bcc6c769caf5262a3abef9b66042f0 *man/prepplot.Rd
 e1cf23ff30eabc78527945cf03bd65c6 *vignettes/prepplotOverview.Rmd

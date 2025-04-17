@@ -1,5 +1,9 @@
 Change log for prepplot
 
+Version 1.0-2, April 2025
+- made all links anchored
+- changed author e-mail address
+
 Version 1.0-1, April 2021
 - added rmarkdown to Suggests, because of change in knitr
 

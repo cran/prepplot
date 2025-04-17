@@ -1,15 +1,19 @@
 Package: prepplot
-Version: 1.0-1
-Date: 2021-04-16
+Version: 1.0-2
+Date: 2025-04-16
 Title: Prepare Figure Region for Base Graphics
-Author: Ulrike Groemping
-Maintainer: Ulrike Groemping <groemping@beuth-hochschule.de>
+Authors@R: person(given = "Ulrike",
+                    family = "Groemping",
+                    role = c("aut", "cre"),
+                    email = "ulrike.groemping@bht-berlin.de")
 Imports: graphics, grDevices, plotrix, shape
 Suggests: bookdown, knitr, rmarkdown, ggplot2, gridBase
 VignetteBuilder: knitr
 Description: A figure region is prepared, creating a plot region with suitable background color, grid lines or shadings, and providing axes and labeling if not suppressed. Subsequently, information carrying graphics elements can be added (points, lines, barplot with add=TRUE and so forth).
 License: GPL (>= 2)
 NeedsCompilation: no
-Packaged: 2021-04-16 16:37:28 UTC; Gr<c3><b6>mping
+Packaged: 2025-04-15 16:00:40 UTC; groemping
+Author: Ulrike Groemping [aut, cre]
+Maintainer: Ulrike Groemping <ulrike.groemping@bht-berlin.de>
 Repository: CRAN
-Date/Publication: 2021-04-16 23:10:02 UTC
+Date/Publication: 2025-04-17 07:40:02 UTC

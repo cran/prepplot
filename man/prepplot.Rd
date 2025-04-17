@@ -6,37 +6,37 @@
 Functions to prepare a figure region for base graphics
 }
 \description{
-Function prepplot prepares a figure region according to individual preferences regarding background color, axes, stripes and/or gridlines; optionally, labelling can be done with the function. 
-Function stripes draws the vertical or horizontal stripes for prepplot and can also be used independently. 
+Function prepplot prepares a figure region according to individual preferences regarding background color, axes, stripes and/or gridlines; optionally, labelling can be done with the function.
+Function stripes draws the vertical or horizontal stripes for prepplot and can also be used independently.
 }
 \usage{
-prepplot(xlim, ylim,                      
-       bg = par("bg"), xaxs=NULL, yaxs=NULL, 
-       lwd.axis = 0, col.axis = "grey20",  
+prepplot(xlim, ylim,
+       bg = par("bg"), xaxs=NULL, yaxs=NULL,
+       lwd.axis = 0, col.axis = "grey20",
        border = ifelse(lwd.axis == 0, bg, col.axis),
-       axes = TRUE, xaxt = par("xaxt"), yaxt = par("yaxt"), 
-       xticks = NULL, yticks = NULL, 
-       xticklabs = xticks, yticklabs = yticks, 
-       mgpx = par("mgp"), xaxside = 1, 
+       axes = TRUE, xaxt = par("xaxt"), yaxt = par("yaxt"),
+       xticks = NULL, yticks = NULL,
+       xticklabs = xticks, yticklabs = yticks,
+       mgpx = par("mgp"), xaxside = 1,
        mgpy = mgpx, yaxside = 2,
-       xlab = NULL, ylab = NULL, 
-       cex = par("cex"), las = 1, lasx = las, lasy = las, 
+       xlab = NULL, ylab = NULL,
+       cex = par("cex"), las = 1, lasx = las, lasy = las,
        gridx = FALSE, gridy = FALSE,
        gridxminor = 0, gridyminor = 0,
-       lty.grid = ifelse(max(gridxminor, gridyminor) > 0, 
+       lty.grid = ifelse(max(gridxminor, gridyminor) > 0,
                          "solid", "dotted"),
-       col.grid = "grey50", 
+       col.grid = "grey50",
        lwd = par("lwd"), lwd.grid = lwd,
-       lty.grid.minor = "dotted", 
-       col.grid.minor = col.grid, 
+       lty.grid.minor = "dotted",
+       col.grid.minor = col.grid,
        lwd.grid.minor = 0.5 * lwd.grid,
        stripesx = FALSE, stripesy = FALSE,
        col.stripes = "grey90",
        axis.arrow = FALSE,
-       arrow.length = 0.3, arrow.width = 0.2, 
+       arrow.length = 0.3, arrow.width = 0.2,
        arrow.code = 2, arrow.type = "triangle", ...)
 
-stripes(stripesx = numeric(0), stripesy = numeric(0), col.stripes = "grey90", 
+stripes(stripesx = numeric(0), stripesy = numeric(0), col.stripes = "grey90",
        usr=NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -112,10 +112,10 @@ general annotation size; default \code{par("cex")}; if specified, it also adapts
 direction of axis labeling; default: parallel to horizontal axis; you may want to change this to 0 (parallell to axes) in case of longer y-axis labels
 }
   \item{lasx}{
-direction of tick labels for horizontal axis; default: equal to \code{las}; note that \code{xlab} remains parallel to the axis, regardless of the choice for \code{las} (can only be changed by adding it later with \code{\link{mtext}})
+direction of tick labels for horizontal axis; default: equal to \code{las}; note that \code{xlab} remains parallel to the axis, regardless of the choice for \code{las} (can only be changed by adding it later with \code{\link[graphics]{mtext}})
 }
   \item{lasy}{
-direction of tick labels for vertical axis; default: equal to \code{las}; note that \code{ylab} remains parallel to the axis, regardless of the choice for \code{las} (can only be changed by adding it later with \code{\link{mtext}})
+direction of tick labels for vertical axis; default: equal to \code{las}; note that \code{ylab} remains parallel to the axis, regardless of the choice for \code{las} (can only be changed by adding it later with \code{\link[graphics]{mtext}})
 }
 \item{gridx}{
 logical or numeric; if \code{TRUE}, draws grid lines at the tick mark positions; if numeric, number of grid lines between the \code{xlim} values or numeric vector of grid line positions for horizontal axis; default: \code{FALSE} for no grid lines (positive \code{gridxminor} implies switch to \code{gridx=TRUE})
@@ -136,7 +136,7 @@ color for grid lines
 line type for (major) grid lines; defaults to a dotted line with no minor grid lines and a solid line with minor grid lines (regardless of the direction of the minor grid lines)
 }
   \item{lwd}{
-line width (for grid lines), default is from the current \code{\link{par}} setting
+line width (for grid lines), default is from the current \code{\link[graphics]{par}} setting
 }
   \item{lwd.grid}{
 line width for grid lines, default is \code{lwd}
@@ -162,10 +162,10 @@ color of the stripes
   \item{axis.arrow}{
   logical (default \code{FALSE}) or numeric vector of two positions at which to draw axis arrows for vertical and horizontal axis (first value: y position for horizontal axis, second value: x position for vertical axis); if set to \code{TRUE}, the positions are the values for \code{xaxpos} and \code{yaxpos}, respectively; for one axis arrow only, use \code{NA} for the other element
   }
-  \item{arrow.length}{numeric arrow length for function \code{\link{Arrows}}; default: 0.3}
-  \item{arrow.width}{numeric arrow width for function \code{\link{Arrows}}; default: 0.2}
-  \item{arrow.type}{character arrow type for function \code{\link{Arrows}}; default: "triangle"} 
-  \item{arrow.code}{default: 2 (y axis arrow upwards, x axis arrow to the right); for other choices see Details section of \code{\link{Arrows}}} 
+  \item{arrow.length}{numeric arrow length for function \code{\link[shape]{Arrows}}; default: 0.3}
+  \item{arrow.width}{numeric arrow width for function \code{\link[shape]{Arrows}}; default: 0.2}
+  \item{arrow.type}{character arrow type for function \code{\link[shape]{Arrows}}; default: "triangle"}
+  \item{arrow.code}{default: 2 (y axis arrow upwards, x axis arrow to the right); for other choices see Details section of \code{\link[shape]{Arrows}}}
   \item{usr}{
   \code{NULL} (default), or a numeric vector with limits of the area within which to draw the stripes; the default amounts to \code{par("usr")}
   }
@@ -176,7 +176,7 @@ further arguments given to functions \code{plot}, \code{mtext}, \code{stripes}, 
 \details{
 \code{prepplot} supports the preparation of a customized plot region to which the information carrying graphical elements can be added. It can be used with all functions that allow adding to existing base graphics plots (e.g. \code{points}, \code{lines}, \code{barplot}, \code{rect}, \code{symbols}, ...). Usage with other functions is also possible, but requires careful application after setting \code{par(new=TRUE)}.
 
-If an axis is not suppressed (by \code{axes=FALSE} or \code{xaxt="n"} or \code{xaxt="n"}), axis ticks are placed at the positions specified in \code{xticks} or \code{yticks}; if these are \code{NULL}, numeric specifications for \code{gridx} or \code{gridy} determine the tick positions, and if these are also non-existent, numeric specifications for \code{stripesx} or \code{stripesy} determine the tick positions. If all these are unspecified, the tick positions are determined from the default axis behavior using function \code{\link{axisTicks}} (with option \code{log=FALSE}). Per default, axis lines (whether visible or width 0) meet at the position (\code{xlim[1]}, \code{ylim[1]}) (assuming 2-element limits, which are determined from longer \code{*lim} arguments with the \code{range} function, where needed); options \code{mgpx} or \code{mgpy} can be used for moving the axis line, tick labels and/or axis labels inwards or outwards; they default to the settings in \code{par("mgp")}, and it may be convenient to change that setting rather than using the option in several \code{prepplot} calls (see also Example section). Instead of specifying the labelling with function \code{prepplot}, it can also be handled by subsequent \code{title} and/or \code{axis} statements.
+If an axis is not suppressed (by \code{axes=FALSE} or \code{xaxt="n"} or \code{xaxt="n"}), axis ticks are placed at the positions specified in \code{xticks} or \code{yticks}; if these are \code{NULL}, numeric specifications for \code{gridx} or \code{gridy} determine the tick positions, and if these are also non-existent, numeric specifications for \code{stripesx} or \code{stripesy} determine the tick positions. If all these are unspecified, the tick positions are determined from the default axis behavior using function \code{\link[grDevices]{axisTicks}} (with option \code{log=FALSE}). Per default, axis lines (whether visible or width 0) meet at the position (\code{xlim[1]}, \code{ylim[1]}) (assuming 2-element limits, which are determined from longer \code{*lim} arguments with the \code{range} function, where needed); options \code{mgpx} or \code{mgpy} can be used for moving the axis line, tick labels and/or axis labels inwards or outwards; they default to the settings in \code{par("mgp")}, and it may be convenient to change that setting rather than using the option in several \code{prepplot} calls (see also Example section). Instead of specifying the labelling with function \code{prepplot}, it can also be handled by subsequent \code{title} and/or \code{axis} statements.
 
 For grid lines, it is possible to provide minor grid lines (by specifying the number of minor grid lines between major ones); it is also possible to specify major grid lines in complete independence of the tick mark positions, e.g. for displaying information on regulatory limits, target values or specific events (on a time axis).
 
@@ -195,7 +195,7 @@ Ulrike Groemping
 }
 
 \seealso{
-See also \code{\link{Arrows}} for arrows.
+See also \code{\link[shape]{Arrows}} for arrows.
 }
 \examples{
 ## default
@@ -204,31 +204,31 @@ prepplot(0:10, -5:5, xaxs="i", yaxs="i")
 ## with stripes and grid based on default tick positions
 prepplot(0:10, -5:5, stripesy=TRUE, gridx=TRUE)
 
-## with white background, 
+## with white background,
 ## axis lines and small ticks,
 ## major and minor grid for y,
-## and plot area defined by axis limits 
+## and plot area defined by axis limits
 ##    instead of default usr coordinates
 ## (border is drawn because of lwd.axis)
 ## mgpx moves tick position labels closer to axes
 prepplot(0:10, -5:5, bg="white", xaxs="i", yaxs="i",
-    lwd.axis = 1, 
-    gridy=c(-5,0,5), gridyminor=4, 
+    lwd.axis = 1,
+    gridy=c(-5,0,5), gridyminor=4,
     tcl=-0.2, mgpx=c(3,0.5,0))
 
 ## without axis lines but with default background
 ## looks better with bg.area="lim"
 ## unless actual data points extend to the limits
-prepplot(0:10, -5:5, yticks=seq(-5,5,5), 
+prepplot(0:10, -5:5, yticks=seq(-5,5,5),
          gridy=-5:5, gridx=TRUE,
          xaxs="i", yaxs="i")
-         
+
 ## with axis arrows
 ## narrower margins
 ## small tick marks
 ## tick annotations close to axis
 par(mar=c(3,3,2,1), mgp=c(2,0.35,0))
-prepplot(0:10, -5:5, yticks=seq(-5,5,5), 
+prepplot(0:10, -5:5, yticks=seq(-5,5,5),
          gridy=-5:5, gridx=TRUE, lwd.axis=1, tcl=-0.2,
          border="grey92", axis.arrow=TRUE)
 dev.off()  ## eliminates modified par settings
@@ -239,17 +239,17 @@ dev.off()  ## eliminates modified par settings
 par(mfrow=c(1,2), xaxs="i", yaxs="i")
   ## adding labeling subsequently
   par(mgp=c(2.25,0.75,0))
-  prepplot(0:10, -5:5, yticks=seq(-5,5,5), 
+  prepplot(0:10, -5:5, yticks=seq(-5,5,5),
            gridy=-5:5, gridx=TRUE)
-  title(xlab="x axis label", ylab="y axis label", 
+  title(xlab="x axis label", ylab="y axis label",
   sub="Labeling added subsequently", main="mgp set in par")
   ## adding labeling subsequently
   par(mgp=c(3,1,0)) # back to default
   ## adding labeling within the function
-  prepplot(0:10, -5:5, yticks=seq(-5,5,5), 
+  prepplot(0:10, -5:5, yticks=seq(-5,5,5),
            gridy=-5:5, gridx=TRUE,
-           xlab="x axis label", ylab="y axis label", 
-           mgpx=c(2.25,0.75,0), 
+           xlab="x axis label", ylab="y axis label",
+           mgpx=c(2.25,0.75,0),
            main="mgpx set in prepplot",
            sub="Labeling added within prepplot")
   ## the difference: sub reacts to mgp, not to mgpx
